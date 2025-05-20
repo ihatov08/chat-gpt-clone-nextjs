@@ -1,3 +1,6 @@
+import { Markdown } from "./markdown";
+
+
 export const Message = ({
   message,
 }: {
@@ -24,7 +27,7 @@ export const Message = ({
                         : ""
                     }`}
                   >
-                    {part.text}
+                    <Markdown>{part.text}</Markdown>
                   </div>
                 </div>
               );
