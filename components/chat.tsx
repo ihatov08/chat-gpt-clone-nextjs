@@ -1,3 +1,4 @@
+import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
 
 export function Chat() {
@@ -26,6 +27,7 @@ export function Chat() {
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
       <Messages messages={messages} />
+      <ChatInput />
     </div>
   );
 }
