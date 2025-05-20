@@ -12,6 +12,8 @@
   "dependencies": {
     "@ai-sdk/google": "^1.2.18",
     "@ai-sdk/react": "^1.2.12",
+    "@prisma/client": "6.7.0",
+    "@prisma/extension-accelerate": "^2.0.0",
     "ai": "^4.3.16",
     "next": "15.3.2",
     "react": "^19.0.0",
@@ -27,7 +29,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "prisma": "^6.8.2",
     "tailwindcss": "^4",
+    "tsx": "^4.19.4",
     "typescript": "^5"
   }
 }
