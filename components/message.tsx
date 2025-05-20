@@ -1,6 +1,5 @@
 import { Markdown } from "./markdown";
 
-
 export const Message = ({
   message,
 }: {
