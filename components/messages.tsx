@@ -1,5 +1,6 @@
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { Message } from "./message";
+import { Greeting } from "./greeting";
 
 export function Messages({ messages }: any) {
   const [messagesContainerRef, messagesEndRef] =
@@ -9,6 +10,8 @@ export function Messages({ messages }: any) {
       ref={messagesContainerRef}
       className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
     >
+      {messages.length === 0 && <Greeting />}
+
       {messages.map((message) => (
         <Message key={message.id} message={message} />
       ))}
