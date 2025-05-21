@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { AuthForm } from "./auth-form";
 import { useActionState, useEffect, useState } from "react";
 import { Signup, SignupActionState } from "@/app/(auth)/actions";
+import { toast } from "react-hot-toast";
 
 export function SignupForm() {
   const router = useRouter();
@@ -18,12 +19,17 @@ export function SignupForm() {
   );
 
   useEffect(() => {
-    if (state.status === "success") {
+    console.log(state);
+    if (state.status === "user_exists") {
+      toast.error("アカウントは既に存在します");
+    } else if (state.status === "failed") {
+      toast.error("アカウントの作成に失敗しました");
+    } else if (state.status === "invalid_data") {
+      toast.error("無効なデータが提供されました");
+    } else if (state.status === "success") {
+      toast.success("アカウントが正常に作成されました");
+
       router.push("/");
-    } else if (state.status === "idle") {
-      console.log("idle");
-    } else {
-      alert(state.status);
     }
   }, [state]);
 
