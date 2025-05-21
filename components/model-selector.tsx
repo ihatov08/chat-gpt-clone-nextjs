@@ -2,6 +2,7 @@ import { chatModels } from "@/lib/models";
 import { CheckIcon, DownIcon } from "./icon";
 import { useState } from "react";
 import { saveChatModelAsCookie } from "@/app/(chat)/actions";
+import { useDropdown } from "@/hooks/use-dropdown";
 
 export function ModelSelector({ chatModel }: { chatModel: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,8 +15,12 @@ export function ModelSelector({ chatModel }: { chatModel: string }) {
     throw new Error("Invalid chat model selected");
   }
 
+  const menuRef = useDropdown<HTMLDivElement>(() => {
+    setIsOpen(false);
+  });
+
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" ref={menuRef}>
       <div>
         <button
           type="button"
