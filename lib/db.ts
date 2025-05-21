@@ -24,3 +24,33 @@ export async function createUser(email: string, passwordHash: string) {
 
   return user;
 }
+
+export async function saveChat({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) {
+  const chat = await prisma.chat.create({
+    data: {
+      id,
+      userId,
+    },
+  });
+
+  return chat;
+}
+
+export async function saveMessage({
+  message,
+}: {
+  message: {
+    chatId: string;
+    id: string;
+    role: "user" | "assistant";
+    parts: Array<object>;
+  };
+}) {
+  return await prisma.message.create({ data: message });
+}
