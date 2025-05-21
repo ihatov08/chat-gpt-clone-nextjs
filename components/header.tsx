@@ -3,9 +3,11 @@
 import { Session } from "next-auth";
 import { AvatarMenu } from "./avatar-menu";
 import { useSidebar } from "./sidebar";
-import { SidebarIcon } from "./icon";
+import { NewChatIcon, SidebarIcon } from "./icon";
+import { useRouter } from "next/navigation";
 
 export function ChatHeader({ session }: { session: Session }) {
+  const router = useRouter();
   const { open, toggleSidebar } = useSidebar();
   return (
     <header className="flex sticky top-0 bg-background py-1.5 justify-between items-center px-2 md:px-2 gap-2 h-16">
@@ -18,6 +20,17 @@ export function ChatHeader({ session }: { session: Session }) {
                 onClick={toggleSidebar}
               >
                 <SidebarIcon />
+              </button>
+            </span>
+            <span className="flex">
+              <button
+                className="hover:bg-zinc-200 dark:hover:bg-zinc-700 h-10 rounded-lg px-2 focus:outline-none"
+                onClick={() => {
+                  router.push("/");
+                  router.refresh();
+                }}
+              >
+                <NewChatIcon />
               </button>
             </span>
           </>

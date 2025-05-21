@@ -1,6 +1,7 @@
 "use client";
 
-import { SidebarIcon } from "./icon";
+import { useRouter } from "next/navigation";
+import { NewChatIcon, SidebarIcon } from "./icon";
 import { SidebarHistory } from "./sidebar-history";
 import {
   createContext,
@@ -68,6 +69,7 @@ export function useSidebar() {
 }
 
 export function Sidebar() {
+  const router = useRouter();
   const { open, toggleSidebar } = useSidebar();
   if (!open) {
     return <div className="hidden"></div>;
@@ -90,6 +92,18 @@ export function Sidebar() {
                     onClick={toggleSidebar}
                   >
                     <SidebarIcon />
+                  </button>
+                </span>
+                <span className="flex">
+                  <button
+                    aria-label="新しいチャット"
+                    className="hover:bg-zinc-200 dark:hover:bg-zinc-700 h-10 rounded-lg px-2"
+                    onClick={() => {
+                      router.push("/");
+                      router.refresh();
+                    }}
+                  >
+                    <NewChatIcon />
                   </button>
                 </span>
               </div>
