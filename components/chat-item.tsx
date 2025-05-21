@@ -2,11 +2,13 @@ import { Chat } from "@/app/generated/prisma";
 import Link from "next/link";
 import { EllipsisIcon, TrashIcon } from "./icon";
 import { useState } from "react";
+import { useDropdown } from "@/hooks/use-dropdown";
 
 export const ChatItem = ({ chat }: { chat: Chat }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useDropdown<HTMLDivElement>(() => setIsOpen(false));
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <div className="group rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-800 h-9 text-sm relative">
         <div className="flex justify-between items-center px-1">
           <Link
