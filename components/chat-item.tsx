@@ -14,7 +14,7 @@ export const ChatItem = ({ chat }: { chat: Chat }) => {
               className="relative grow overflow-hidden whitespace-nowrap"
               dir="auto"
             >
-              <p className="truncate w-[150px]">{chat.id}</p>
+              <p className="truncate w-[150px]">{chat.title ?? chat.id}</p>
             </div>
           </Link>
         </div>
