@@ -1,5 +1,5 @@
 import { auth } from "@/app/(auth)/auth";
-import { saveChat, saveMessage } from "@/lib/db";
+import { getChatById, saveChat, saveMessage } from "@/lib/db";
 import { google } from "@ai-sdk/google";
 import { appendResponseMessages, streamText, UIMessage } from "ai";
 
@@ -16,7 +16,14 @@ export async function POST(req: Request) {
 
   const message = messages[0];
 
-  await saveChat({ id, userId: session.user.id });
+  const chat = await getChatById({ id });
+  if (chat) {
+    if (chat.userId !== session.user.id) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+  } else {
+    await saveChat({ id, userId: session.user.id });
+  }
 
   await saveMessage({
     message: {

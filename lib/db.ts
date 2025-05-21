@@ -54,3 +54,17 @@ export async function saveMessage({
 }) {
   return await prisma.message.create({ data: message });
 }
+
+export async function getChatById({ id }: { id: string }) {
+  const chat = await prisma.chat.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!chat) {
+    return null;
+  }
+
+  return chat;
+}
