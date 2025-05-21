@@ -29,6 +29,9 @@ importers:
       bcrypt-ts:
         specifier: ^7.0.0
         version: 7.0.0
+      boring-avatars:
+        specifier: ^1.11.2
+        version: 1.11.2
       next:
         specifier: 15.3.2
         version: 15.3.2(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1050,6 +1053,9 @@ packages:
   bcrypt-ts@7.0.0:
     resolution: {integrity: sha512-JMr30sbKPwF+2TccaNOYJuDx+nCmnTvHGB2rwkj+To/xZhBTX9f8zpTqGy3kpkS26KWOEYPsQlOJ5MVD00RHQQ==}
     engines: {node: '>=20'}
+
+  boring-avatars@1.11.2:
+    resolution: {integrity: sha512-3+wkwPeObwS4R37FGXMYViqc4iTrIRj5yzfX9Qy4mnpZ26sX41dGMhsAgmKks1r/uufY1pl4vpgzMWHYfJRb2A==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -3297,6 +3303,8 @@ snapshots:
   balanced-match@1.0.2: {}
 
   bcrypt-ts@7.0.0: {}
+
+  boring-avatars@1.11.2: {}
 
   brace-expansion@1.1.11:
     dependencies:
