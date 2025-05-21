@@ -22,6 +22,7 @@ export function Chat({
       <ChatHeader session={session} />
       <Messages messages={messages} />
       <ChatInput
+        chatId={id}
         input={input}
         setInput={setInput}
         handleSubmit={handleSubmit}

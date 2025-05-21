@@ -1,24 +1,31 @@
+import { useCallback } from "react";
 import { ArrowUpIcon } from "./icon";
 import { UseChatHelpers } from "@ai-sdk/react";
 
 export function ChatInput({
+  chatId,
   input,
   setInput,
   handleSubmit,
   status,
 }: {
+  chatId: string;
   input: UseChatHelpers["input"];
   setInput: UseChatHelpers["setInput"];
   handleSubmit: UseChatHelpers["handleSubmit"];
   status: UseChatHelpers["status"];
 }) {
+  const submitForm = useCallback(() => {
+    window.history.replaceState({}, "", `/chat/${chatId}`);
+    handleSubmit();
+  }, [handleSubmit, chatId]);
   return (
     <form
       className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl"
       onSubmit={(e) => {
         e.preventDefault();
         if (status === "ready") {
-          handleSubmit();
+          submitForm();
         }
       }}
     >
@@ -39,7 +46,7 @@ export function ChatInput({
               event.preventDefault();
 
               if (status === "ready") {
-                handleSubmit();
+                submitForm();
               }
             }
           }}
