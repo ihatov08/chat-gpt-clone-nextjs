@@ -6,6 +6,7 @@ import { Messages } from "./messages";
 import { ChatHeader } from "./header";
 import { Session } from "next-auth";
 import { UIMessage } from "ai";
+import { mutate } from "swr";
 
 export function Chat({
   id,
@@ -15,6 +16,9 @@ export function Chat({
   const { messages, input, setInput, handleSubmit, status } = useChat({
     id,
     initialMessages,
+    onFinish: () => {
+      mutate("/api/history");
+    },
   });
 
   return (
