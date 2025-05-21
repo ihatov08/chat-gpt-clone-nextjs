@@ -3,12 +3,14 @@
 import { useChat } from "@ai-sdk/react";
 import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
+import { ChatHeader } from "./header";
 
 export function Chat() {
   const { messages, input, setInput, handleSubmit, status } = useChat();
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
+      <ChatHeader />
       <Messages messages={messages} />
       <ChatInput
         input={input}
