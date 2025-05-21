@@ -1,11 +1,17 @@
 import { signOut } from "next-auth/react";
 import { AvatarIcon } from "./icon";
 import { useState } from "react";
+import { useDropdown } from "@/hooks/use-dropdown";
 
 export function AvatarMenu() {
   const [open, setOpen] = useState(false);
+
+  const menuRef = useDropdown<HTMLDivElement>(() => {
+    setOpen(false);
+  });
+
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" ref={menuRef}>
       <div>
         <button
           type="button"
