@@ -2,20 +2,25 @@
 
 import { Chat } from "@/app/generated/prisma";
 import { ChatItem } from "./chat-item";
+import { useParams } from "next/navigation";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 
 export function SidebarHistory() {
-  const chats: Array<Chat> = [
-    {
-      id: "1",
-      userId: "1",
-      createdAt: new Date(),
-    },
-    {
-      id: "2",
-      userId: "1",
-      createdAt: new Date(),
-    },
-  ];
+  const { data: chats, isLoading } = useSWR<Chat[]>(
+    "/api/history",
+    fetcher,
+    {},
+  );
+  if (isLoading) {
+    return (
+      <div className="relative flex w-full min-w-0 flex-col p-2">
+        <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
+          読み込み中...
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <div className="relative flex w-full min-w-0 flex-col p-2">
