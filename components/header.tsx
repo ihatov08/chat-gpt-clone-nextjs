@@ -5,8 +5,12 @@ import { AvatarMenu } from "./avatar-menu";
 import { useSidebar } from "./sidebar";
 import { NewChatIcon, SidebarIcon } from "./icon";
 import { useRouter } from "next/navigation";
+import { ModelSelector } from "./model-selector";
 
-export function ChatHeader({ session }: { session: Session }) {
+export function ChatHeader({
+  session,
+  chatModel,
+}: { session: Session; chatModel: string }) {
   const router = useRouter();
   const { open, toggleSidebar } = useSidebar();
   return (
@@ -35,6 +39,7 @@ export function ChatHeader({ session }: { session: Session }) {
             </span>
           </>
         )}
+        <ModelSelector chatModel={chatModel} />
       </div>
       <AvatarMenu session={session} />
     </header>

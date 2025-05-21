@@ -30,7 +30,7 @@ export function Chat({
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
-      <ChatHeader session={session} />
+      <ChatHeader session={session} chatModel={chatModel} />
       <Messages messages={messages} />
       <ChatInput
         chatId={id}
