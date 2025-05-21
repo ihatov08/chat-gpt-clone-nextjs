@@ -1,8 +1,9 @@
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { Message } from "./message";
 import { Greeting } from "./greeting";
+import { UIMessage } from "ai";
 
-export function Messages({ messages }: any) {
+export function Messages({ messages }: { messages: Array<UIMessage> }) {
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
   return (

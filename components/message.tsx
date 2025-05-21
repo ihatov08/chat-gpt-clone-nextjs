@@ -1,9 +1,10 @@
+import { UIMessage } from "ai";
 import { Markdown } from "./markdown";
 
 export const Message = ({
   message,
 }: {
-  message: any;
+  message: UIMessage;
 }) => {
   return (
     <div
