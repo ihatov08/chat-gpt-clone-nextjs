@@ -2,8 +2,11 @@
 
 import { signin, SigninActionState } from "@/app/(auth)/actions";
 import { AuthForm } from "./auth-form";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export function SigninForm() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
 
   const [state, formAction] = useActionState<SigninActionState, FormData>(
@@ -12,6 +15,18 @@ export function SigninForm() {
       status: "idle",
     },
   );
+
+  useEffect(() => {
+    if (state.status === "failed") {
+      toast.error("認証情報が無効です");
+    } else if (state.status === "invalid_data") {
+      toast.error("サインインに失敗しました");
+    } else if (state.status === "success") {
+      toast.success("サインインに成功しました");
+
+      router.push("/");
+    }
+  }, [state]);
 
   const handleSubmit = (formData: FormData) => {
     setEmail(formData.get("email") as string);
