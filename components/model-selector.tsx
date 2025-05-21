@@ -1,6 +1,7 @@
 import { chatModels } from "@/lib/models";
 import { CheckIcon, DownIcon } from "./icon";
 import { useState } from "react";
+import { saveChatModelAsCookie } from "@/app/(chat)/actions";
 
 export function ModelSelector({ chatModel }: { chatModel: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +40,7 @@ export function ModelSelector({ chatModel }: { chatModel: string }) {
                   onClick={() => {
                     setIsOpen(false);
                     setModelId(id);
+                    saveChatModelAsCookie(id);
                   }}
                 >
                   <div className="flex flex-col gap-1 items-start">
