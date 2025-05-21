@@ -12,10 +12,17 @@ export function Chat({
   id,
   session,
   initialMessages,
-}: { id: string; session: Session; initialMessages: Array<UIMessage> }) {
+  chatModel,
+}: {
+  id: string;
+  session: Session;
+  initialMessages: Array<UIMessage>;
+  chatModel: string;
+}) {
   const { messages, input, setInput, handleSubmit, status } = useChat({
     id,
     initialMessages,
+    body: { id, selectedModel: chatModel },
     onFinish: () => {
       mutate("/api/history");
     },

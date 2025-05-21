@@ -5,6 +5,8 @@ import { Chat } from "@/components/chat";
 import { getChatById, getMessagesByChatId } from "@/lib/db";
 import { Message } from "@/app/generated/prisma";
 import { UIMessage } from "ai";
+import { cookies } from "next/headers";
+import { DEFAULT_CHAT_MODEL } from "@/lib/models";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -35,9 +37,17 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   const messages = convertToUIMessages(messagesFromDB);
 
+  const cookieStore = await cookies();
+  const chatModelFromCookie = cookieStore.get("chat-model");
+
   return (
     <>
-      <Chat id={chat.id} session={session} initialMessages={messages} />
+      <Chat
+        id={chat.id}
+        session={session}
+        initialMessages={messages}
+        chatModel={chatModelFromCookie?.value || DEFAULT_CHAT_MODEL}
+      />
     </>
   );
 }
