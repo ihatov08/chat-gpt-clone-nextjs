@@ -1,6 +1,7 @@
 import { Chat } from "@/components/chat";
 import { auth } from "../(auth)/auth";
 import { redirect } from "next/navigation";
+import { randomUUID } from "crypto";
 
 export default async function Page() {
   const session = await auth();
@@ -8,9 +9,11 @@ export default async function Page() {
   if (!session) {
     redirect("/signin");
   }
+
+  const id = randomUUID();
   return (
     <>
-      <Chat session={session} />
+      <Chat id={id} session={session} />
     </>
   );
 }
