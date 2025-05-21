@@ -3,7 +3,7 @@ import { compareSync } from "bcrypt-ts";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-export const { handlers, signIn } = NextAuth({
+export const { handlers, signIn, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {},
