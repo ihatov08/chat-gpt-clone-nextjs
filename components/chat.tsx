@@ -5,9 +5,17 @@ import { ChatInput } from "./chat-input";
 import { Messages } from "./messages";
 import { ChatHeader } from "./header";
 import { Session } from "next-auth";
+import { UIMessage } from "ai";
 
-export function Chat({ id, session }: { id: string; session: Session }) {
-  const { messages, input, setInput, handleSubmit, status } = useChat({ id });
+export function Chat({
+  id,
+  session,
+  initialMessages,
+}: { id: string; session: Session; initialMessages: Array<UIMessage> }) {
+  const { messages, input, setInput, handleSubmit, status } = useChat({
+    id,
+    initialMessages,
+  });
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">

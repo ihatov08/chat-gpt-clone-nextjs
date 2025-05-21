@@ -2,7 +2,9 @@ import { notFound, redirect } from "next/navigation";
 
 import { auth } from "@/app/(auth)/auth";
 import { Chat } from "@/components/chat";
-import { getChatById } from "@/lib/db";
+import { getChatById, getMessagesByChatId } from "@/lib/db";
+import { Message } from "@/app/generated/prisma";
+import { UIMessage } from "ai";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -19,9 +21,23 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     redirect("/signin");
   }
 
+  const messagesFromDB = await getMessagesByChatId({ id });
+
+  function convertToUIMessages(messages: Array<Message>): Array<UIMessage> {
+    return messages.map((message) => ({
+      id: message.id,
+      parts: message.parts as UIMessage["parts"],
+      role: message.role as UIMessage["role"],
+      content: "",
+      createdAt: message.createdAt,
+    }));
+  }
+
+  const messages = convertToUIMessages(messagesFromDB);
+
   return (
     <>
-      <Chat id={chat.id} session={session} />
+      <Chat id={chat.id} session={session} initialMessages={messages} />
     </>
   );
 }

@@ -68,3 +68,13 @@ export async function getChatById({ id }: { id: string }) {
 
   return chat;
 }
+
+export async function getMessagesByChatId({ id }: { id: string }) {
+  const messages = await prisma.message.findMany({
+    where: {
+      chatId: id,
+    },
+  });
+
+  return messages;
+}
