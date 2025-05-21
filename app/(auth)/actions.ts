@@ -47,3 +47,39 @@ export const Signup = async (
     return { status: "failed" };
   }
 };
+
+export interface SigninActionState {
+  status: "idle" | "success" | "failed" | "invalid_data";
+}
+
+export const signin = async (
+  _: SigninActionState,
+  formData: FormData,
+): Promise<SigninActionState> => {
+  try {
+    const validatedData = await v.parseAsync(
+      v.object({
+        email: v.pipe(v.string(), v.email()),
+        password: v.pipe(v.string(), v.minLength(8), v.maxLength(20)),
+      }),
+      Object.fromEntries(formData.entries()),
+    );
+
+    const user = await getUserByEmail(validatedData.email);
+    if (!user) {
+      return { status: "invalid_data" } as SigninActionState;
+    }
+    await signIn("credentials", {
+      email: validatedData.email,
+      password: validatedData.password,
+      redirect: false,
+    });
+
+    return { status: "success" };
+  } catch (error) {
+    if (error instanceof v.isValiError) {
+      return { status: "invalid_data" };
+    }
+    return { status: "failed" };
+  }
+};
