@@ -1,13 +1,21 @@
 "use client";
 
+import { signin, SigninActionState } from "@/app/(auth)/actions";
 import { AuthForm } from "./auth-form";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 export function SigninForm() {
   const [email, setEmail] = useState("");
 
+  const [state, formAction] = useActionState<SigninActionState, FormData>(
+    signin,
+    {
+      status: "idle",
+    },
+  );
+
   const handleSubmit = (formData: FormData) => {
-    // サインイン処理
     setEmail(formData.get("email") as string);
+    formAction(formData);
   };
   return (
     <AuthForm action={handleSubmit} email={email}>
