@@ -1,7 +1,13 @@
 "use client";
 
 import { SidebarHistory } from "./sidebar-history";
-import { createContext, useCallback, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -51,6 +57,14 @@ type SidebarContext = {
 };
 
 const SidebarContext = createContext<SidebarContext | null>(null);
+
+export function useSidebar() {
+  const context = useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider");
+  }
+  return context;
+}
 
 export function Sidebar() {
   return (
