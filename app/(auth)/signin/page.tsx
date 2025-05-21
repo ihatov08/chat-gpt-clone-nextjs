@@ -1,6 +1,7 @@
 "use client";
 
 import AuthFooter from "@/components/auth-footer";
+import { SigninForm } from "@/components/signin-form";
 import Link from "next/link";
 
 export default function Page() {
@@ -12,7 +13,7 @@ export default function Page() {
             サインイン
           </h3>
         </div>
-        {/* ここにサインインフォーム */}
+        <SigninForm />
         <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
           まだアカウントをお持ちでないですか？
           <Link
