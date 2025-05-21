@@ -1,5 +1,6 @@
 import { auth } from "@/app/(auth)/auth";
 import { getChatById, saveChat, saveMessage } from "@/lib/db";
+import { myProvider } from "@/lib/models";
 import { google } from "@ai-sdk/google";
 import {
   appendResponseMessages,
@@ -11,7 +12,11 @@ import {
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { id, messages }: { id: string; messages: Array<UIMessage> } =
+  const {
+    id,
+    messages,
+    selectedModel,
+  }: { id: string; messages: Array<UIMessage>; selectedModel: string } =
     await req.json();
 
   const session = await auth();
@@ -28,7 +33,7 @@ export async function POST(req: Request) {
     }
   } else {
     const { text: title } = await generateText({
-      model: google("gemini-2.0-flash"),
+      model: myProvider.languageModel(selectedModel),
       prompt: JSON.stringify(message),
       system: `
         - ユーザーが会話を始める最初のメッセージに基づいて、短いタイトルを生成します
