@@ -1,7 +1,49 @@
 "use client";
 
 import { SidebarHistory } from "./sidebar-history";
-import { createContext } from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
+
+const SIDEBAR_COOKIE_NAME = "sidebar:state";
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+
+export const SidebarProvider = ({
+  defaultOpen = true,
+  children,
+  ...props
+}: React.ComponentProps<"div"> & {
+  defaultOpen?: boolean;
+}) => {
+  const [open, _setOpen] = useState(defaultOpen);
+
+  const setOpen = useCallback(
+    (value: boolean) => {
+      document.cookie = `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      _setOpen(value);
+    },
+    [_setOpen],
+  );
+
+  const toggleSidebar = useCallback(() => {
+    setOpen(!open);
+  }, [setOpen, open]);
+
+  const contextValue = useMemo<SidebarContext>(
+    () => ({
+      open,
+      toggleSidebar,
+    }),
+    [open, toggleSidebar],
+  );
+
+  return (
+    <SidebarContext.Provider value={contextValue}>
+      <div className="group/sidebar-wrapper flex min-h-svh w-full" {...props}>
+        {children}
+      </div>
+    </SidebarContext.Provider>
+  );
+};
+SidebarProvider.displayName = "SidebarProvider";
 
 type SidebarContext = {
   open: boolean;
