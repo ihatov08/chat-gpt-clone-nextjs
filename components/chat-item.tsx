@@ -1,5 +1,6 @@
 import { Chat } from "@/app/generated/prisma";
 import Link from "next/link";
+import { EllipsisIcon } from "./icon";
 
 export const ChatItem = ({ chat }: { chat: Chat }) => {
   return (
@@ -17,6 +18,9 @@ export const ChatItem = ({ chat }: { chat: Chat }) => {
               <p className="truncate w-[150px]">{chat.title ?? chat.id}</p>
             </div>
           </Link>
+          <button>
+            <EllipsisIcon />
+          </button>
         </div>
       </div>
     </div>
