@@ -1,6 +1,6 @@
 import { Chat } from "@/app/generated/prisma";
 import Link from "next/link";
-import { EllipsisIcon } from "./icon";
+import { EllipsisIcon, TrashIcon } from "./icon";
 
 export const ChatItem = ({ chat }: { chat: Chat }) => {
   return (
@@ -21,6 +21,16 @@ export const ChatItem = ({ chat }: { chat: Chat }) => {
           <button>
             <EllipsisIcon />
           </button>
+        </div>
+        <div className="absolute z-30 mt-2 w-32 right-0 rounded-md bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black/5 focus:outline-hidden">
+          <div className="py-1" role="none">
+            <button className="gap-4 group/item flex justify-between items-center p-2">
+              <TrashIcon />
+              <div className="flex flex-col gap-1 items-start text-red-400">
+                <div>削除</div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
