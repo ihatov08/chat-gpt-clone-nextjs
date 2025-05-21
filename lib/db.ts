@@ -28,14 +28,17 @@ export async function createUser(email: string, passwordHash: string) {
 export async function saveChat({
   id,
   userId,
+  title,
 }: {
   id: string;
   userId: string;
+  title: string;
 }) {
   const chat = await prisma.chat.create({
     data: {
       id,
       userId,
+      title,
     },
   });
 
