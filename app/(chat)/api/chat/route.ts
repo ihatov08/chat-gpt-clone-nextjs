@@ -1,7 +1,7 @@
 import { auth } from "@/app/(auth)/auth";
 import { saveChat, saveMessage } from "@/lib/db";
 import { google } from "@ai-sdk/google";
-import { streamText, UIMessage } from "ai";
+import { appendResponseMessages, streamText, UIMessage } from "ai";
 
 export const maxDuration = 30;
 
@@ -30,6 +30,25 @@ export async function POST(req: Request) {
   const result = streamText({
     model: google("gemini-2.0-flash"),
     messages,
+    onFinish: async ({ response }) => {
+      try {
+        const [, assistantMessage] = appendResponseMessages({
+          messages: [message],
+          responseMessages: response.messages,
+        });
+
+        await saveMessage({
+          message: {
+            id: assistantMessage.id,
+            chatId: id,
+            role: "assistant",
+            parts: assistantMessage.parts ?? [],
+          },
+        });
+      } catch (_) {
+        console.error("チャットの保存に失敗しました");
+      }
+    },
   });
 
   return result.toDataStreamResponse();
