@@ -1,5 +1,6 @@
 "use client";
 
+import { SidebarIcon } from "./icon";
 import { SidebarHistory } from "./sidebar-history";
 import {
   createContext,
@@ -67,6 +68,10 @@ export function useSidebar() {
 }
 
 export function Sidebar() {
+  const { open, toggleSidebar } = useSidebar();
+  if (!open) {
+    return <div className="hidden"></div>;
+  }
   return (
     <div className="z-20 dark:bg-black bg-white shrink-0 w-64 h-screen overflow-y-auto">
       <div className="h-full w-64">
@@ -74,6 +79,20 @@ export function Sidebar() {
           <div className="relative h-full w-full flex-1 items-start border-r border-zinc-700">
             <h2 className="sr-only">チャット履歴</h2>
             <nav className="flex h-full w-full flex-col pl-3">
+              <div
+                id="sidebar-header"
+                className="flex justify-between h-16 items-center pr-3"
+              >
+                <span className="flex">
+                  <button
+                    className="hover:bg-zinc-200 dark:hover:bg-zinc-700 h-10 rounded-lg px-2"
+                    aria-label="サイドバーを閉じる"
+                    onClick={toggleSidebar}
+                  >
+                    <SidebarIcon />
+                  </button>
+                </span>
+              </div>
               <div className="flex-col flex-1 transition-opacity duration-500 relative pr-3 overflow-y-auto">
                 <div id="sidebar" className="group/sidebar">
                   <div className="flex flex-col gap-2 text-sm">
