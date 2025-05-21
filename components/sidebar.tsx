@@ -1,6 +1,14 @@
 "use client";
 
 import { SidebarHistory } from "./sidebar-history";
+import { createContext } from "react";
+
+type SidebarContext = {
+  open: boolean;
+  toggleSidebar: () => void;
+};
+
+const SidebarContext = createContext<SidebarContext | null>(null);
 
 export function Sidebar() {
   return (
