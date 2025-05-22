@@ -2,25 +2,52 @@
 
 import { Chat } from "@/app/generated/prisma";
 import { ChatItem } from "./chat-item";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { useState } from "react";
 import { DeleteModal } from "./delete-modal";
+import toast from "react-hot-toast";
 
 export function SidebarHistory() {
+  const { id } = useParams();
+  const router = useRouter();
   const [deleteChat, setDeleteChat] = useState<Chat | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const { data: chats, isLoading } = useSWR<Chat[]>(
-    "/api/history",
-    fetcher,
-    {},
-  );
+  const {
+    data: chats,
+    isLoading,
+    mutate,
+  } = useSWR<Chat[]>("/api/history", fetcher, {});
 
-  const handleDeleteChat = async () =>
-    fetch(`/api/chat?id=${deleteChat!.id}`, {
+  const handleDeleteChat = async () => {
+    const deletePromise = fetch(`/api/chat?id=${deleteChat!.id}`, {
       method: "DELETE",
     });
+
+    toast.promise(deletePromise, {
+      loading: "チャットを削除中...",
+      success: () => {
+        mutate((chats) => {
+          if (chats) {
+            return chats.map((chat) => ({
+              ...chat,
+              chats: chats.filter((chat) => chat.id !== deleteChat!.id),
+            }));
+          }
+        });
+
+        return "チャットが正常に削除されました";
+      },
+      error: "チャットの削除に失敗しました",
+    });
+
+    setShowDeleteModal(false);
+
+    if (deleteChat!.id === id) {
+      router.push("/");
+    }
+  };
 
   if (isLoading) {
     return (
