@@ -17,6 +17,9 @@ importers:
       '@ai-sdk/react':
         specifier: ^1.2.12
         version: 1.2.12(react@19.1.0)(zod@3.25.7)
+      '@auth/prisma-adapter':
+        specifier: 2.9.0
+        version: 2.9.0(@prisma/client@6.7.0(prisma@6.8.2(typescript@5.8.3))(typescript@5.8.3))
       '@next-auth/prisma-adapter':
         specifier: ^1.0.7
         version: 1.0.7(@prisma/client@6.7.0(prisma@6.8.2(typescript@5.8.3))(typescript@5.8.3))(next-auth@5.0.0-beta.27(next@15.3.2(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0))
@@ -161,6 +164,11 @@ packages:
         optional: true
       nodemailer:
         optional: true
+
+  '@auth/prisma-adapter@2.9.0':
+    resolution: {integrity: sha512-Vo/o3YJOa6x2gklQ+XE/JfUf8+CVSDci/nvlOc6psiIiUGigqnQpap2DAxD8brNNYGYKOJ4OAiSt6kQyk3WP3g==}
+    peerDependencies:
+      '@prisma/client': '>=2.26.0 || >=3 || >=4 || >=5 || >=6'
 
   '@biomejs/biome@1.9.4':
     resolution: {integrity: sha512-1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog==}
@@ -2574,6 +2582,15 @@ snapshots:
       oauth4webapi: 3.5.1
       preact: 10.24.3
       preact-render-to-string: 6.5.11(preact@10.24.3)
+
+  '@auth/prisma-adapter@2.9.0(@prisma/client@6.7.0(prisma@6.8.2(typescript@5.8.3))(typescript@5.8.3))':
+    dependencies:
+      '@auth/core': 0.39.0
+      '@prisma/client': 6.7.0(prisma@6.8.2(typescript@5.8.3))(typescript@5.8.3)
+    transitivePeerDependencies:
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
+      - nodemailer
 
   '@biomejs/biome@1.9.4':
     optionalDependencies:
