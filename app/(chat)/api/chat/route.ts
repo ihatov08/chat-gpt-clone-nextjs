@@ -1,5 +1,5 @@
 import { auth } from "@/app/(auth)/auth";
-import { getChatById, saveChat, saveMessage } from "@/lib/db";
+import { deleteChatById, getChatById, saveChat, saveMessage } from "@/lib/db";
 import { myProvider } from "@/lib/models";
 import { google } from "@ai-sdk/google";
 import {
@@ -80,4 +80,40 @@ export async function POST(req: Request) {
   });
 
   return result.toDataStreamResponse();
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return new Response("Not Found", { status: 404 });
+  }
+
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  try {
+    const chat = await getChatById({ id });
+
+    if (!chat) {
+      return new Response("Not Found", { status: 404 });
+    }
+
+    if (chat.userId !== session.user.id) {
+      return new Response("Forbidden", { status: 403 });
+    }
+
+    const deletedChat = await deleteChatById({ id });
+
+    return Response.json(deletedChat, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response("チャットの削除に失敗しました", {
+      status: 500,
+    });
+  }
 }

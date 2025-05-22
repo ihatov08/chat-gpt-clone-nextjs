@@ -94,3 +94,20 @@ export async function getChatsByUserId({ id }: { id: string }) {
 
   return chats;
 }
+
+export async function deleteChatById({ id }: { id: string }) {
+  const chat = await prisma.$transaction(async (prisma) => {
+    await prisma.message.deleteMany({
+      where: {
+        chatId: id,
+      },
+    });
+    return await prisma.chat.delete({
+      where: {
+        id,
+      },
+    });
+  });
+
+  return chat;
+}
