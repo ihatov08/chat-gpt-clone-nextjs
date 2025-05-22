@@ -1,6 +1,7 @@
 "use client";
 
 import AuthFooter from "@/components/auth-footer";
+import GoogleLoginButton from "@/components/google-login-button";
 import { SigninForm } from "@/components/signin-form";
 import Link from "next/link";
 
@@ -23,6 +24,14 @@ export default function Page() {
             アカウント登録
           </Link>
         </p>
+        <div className="flex items-center justify-center">
+          <div className="h-px px-4 sm:px-16 bg-zinc-200 dark:bg-zinc-600"></div>
+          <span className="mx-4 my-2 text-sm text-zinc-500 dark:text-zinc-400 writing-mode-vertical-rl text-orientation-upright">
+            または
+          </span>
+          <div className="h-px px-4 sm:px-16 bg-zinc-200 dark:bg-zinc-600"></div>
+        </div>
+        <GoogleLoginButton />
         <AuthFooter />
       </div>
     </div>
