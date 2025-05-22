@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDropdown } from "@/hooks/use-dropdown";
 import Avatar from "boring-avatars";
 import { Session } from "next-auth";
+import { ThemeSwitch } from "./theme-switch";
 
 export function AvatarMenu({ session }: { session: Session }) {
   const [open, setOpen] = useState(false);
@@ -28,6 +29,9 @@ export function AvatarMenu({ session }: { session: Session }) {
       </div>
       {open && (
         <div className="absolute right-0 z-100 mt-2 w-56 origin-top-right rounded-md shadow-lg dark:bg-zinc-800 ring-black/5">
+          <div className="py-1" role="none">
+            <ThemeSwitch />
+          </div>
           <div className="py-1" role="none">
             <button
               className="block px-4 py-2 text-sm"
