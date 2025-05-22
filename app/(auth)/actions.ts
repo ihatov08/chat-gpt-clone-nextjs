@@ -83,3 +83,8 @@ export const signin = async (
     return { status: "failed" };
   }
 };
+
+export async function googleSignIn() {
+  await signIn("google", { redirectTo: "/" });
+  return { status: "success" };
+}
