@@ -5,13 +5,23 @@ import { ChatItem } from "./chat-item";
 import { useParams } from "next/navigation";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
+import { useState } from "react";
+import { DeleteModal } from "./delete-modal";
 
 export function SidebarHistory() {
+  const [deleteChat, setDeleteChat] = useState<Chat | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { data: chats, isLoading } = useSWR<Chat[]>(
     "/api/history",
     fetcher,
     {},
   );
+
+  const handleDeleteChat = async () =>
+    fetch(`/api/chat?id=${deleteChat!.id}`, {
+      method: "DELETE",
+    });
+
   if (isLoading) {
     return (
       <div className="relative flex w-full min-w-0 flex-col p-2">
@@ -33,7 +43,14 @@ export function SidebarHistory() {
                     {chats.length > 0 && (
                       <div>
                         {chats.map((chat) => (
-                          <ChatItem key={chat.id} chat={chat} />
+                          <ChatItem
+                            key={chat.id}
+                            chat={chat}
+                            onDelete={() => {
+                              setDeleteChat(chat);
+                              setShowDeleteModal(true);
+                            }}
+                          />
                         ))}
                       </div>
                     )}
@@ -43,6 +60,12 @@ export function SidebarHistory() {
           </div>
         </div>
       </div>
+      <DeleteModal
+        open={showDeleteModal}
+        setOpen={setShowDeleteModal}
+        chatTitle={deleteChat?.title}
+        onDelete={handleDeleteChat}
+      />
     </>
   );
 }

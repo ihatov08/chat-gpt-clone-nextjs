@@ -4,7 +4,10 @@ import { EllipsisIcon, TrashIcon } from "./icon";
 import { useState } from "react";
 import { useDropdown } from "@/hooks/use-dropdown";
 
-export const ChatItem = ({ chat }: { chat: Chat }) => {
+export const ChatItem = ({
+  chat,
+  onDelete,
+}: { chat: Chat; onDelete: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useDropdown<HTMLDivElement>(() => setIsOpen(false));
   return (
@@ -29,7 +32,13 @@ export const ChatItem = ({ chat }: { chat: Chat }) => {
         {isOpen && (
           <div className="absolute z-30 mt-2 w-32 right-0 rounded-md bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black/5 focus:outline-hidden">
             <div className="py-1" role="none">
-              <button className="gap-4 group/item flex justify-between items-center p-2">
+              <button
+                className="gap-4 group/item flex justify-between items-center p-2"
+                onClick={() => {
+                  setIsOpen(false);
+                  onDelete();
+                }}
+              >
                 <TrashIcon />
                 <div className="flex flex-col gap-1 items-start text-red-400">
                   <div>削除</div>
